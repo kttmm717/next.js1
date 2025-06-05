@@ -117,7 +117,7 @@ async function seedRevenue() {
 //localhost:seedにGETアクセスしたときに実行される処理
 export async function GET() {
   try {
-    const result = await sql.begin((sql) => [
+    await sql.begin(() => [
       seedUsers(),
       seedCustomers(),
       seedInvoices(),

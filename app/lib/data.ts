@@ -1,4 +1,4 @@
-//再利用可能な関数
+//sql文
 
 import postgres from 'postgres';
 import {
@@ -10,7 +10,6 @@ import {
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
-import { invoices } from './placeholder-data';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -203,15 +202,14 @@ export async function fetchInvoiceById(id: string) {
         invoices
       WHERE
         invoices.id = ${id};
-      
     `;
 
     const invoice = data.map((invoice) => ({
       ...invoice,
-      // Convert amount from cents to dollars
       amount: invoice.amount / 100,
     }));
-
+    
+    console.log(invoice);
     return invoice[0];
   } catch (error) {
     console.error('Database Error:', error);
